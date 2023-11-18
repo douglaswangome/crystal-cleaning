@@ -48,7 +48,7 @@ const Login = () => {
 
 	return (
 		<div className="flex flex-col justify-center items-center w-screen h-screen">
-			<div className="flex flex-col gap-2 w-fit min-w-[300px]">
+			<div className="flex flex-col gap-2 w-[300px] max-[300px]:px-2 max-[300px]:w-full">
 				<img
 					className="bg-[#0f93fe] p-2 h-[40px] w-[40px] mx-auto object-contain rounded-full"
 					src="/images/logo.png"

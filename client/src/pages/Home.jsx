@@ -67,7 +67,9 @@ const Home = () => {
 		} catch (err) {
 			notify(err.response.status, err.response.data.message);
 		} finally {
-			navigate(0);
+			setTImeout(() => {
+				navigate(0);
+			}, 1000);
 			setNewClient({
 				fullname: "",
 				phone: "",
@@ -110,7 +112,9 @@ const Home = () => {
 		} catch (err) {
 			notify(err.response.status, err.response.data.message);
 		} finally {
-			navigate(0);
+			setTImeout(() => {
+				navigate(0);
+			}, 1000);
 			setNewEmployee({
 				fullname: "",
 				phone: "",
@@ -163,7 +167,7 @@ const Home = () => {
 	const submitSchedule = async () => {
 		try {
 			let response;
-			if (newSchedule.scheduleID !== undefined) {
+			if (newSchedule.scheduleID === undefined) {
 				response = await api.post("/schedules/add", { schedule: newSchedule });
 			} else {
 				response = await api.put("/schedules/update", {
@@ -174,7 +178,9 @@ const Home = () => {
 		} catch (err) {
 			notify(err.response.status, err.response.data.message);
 		} finally {
-			navigate(0);
+			setTImeout(() => {
+				navigate(0);
+			}, 1000);
 			setNewSchedule({
 				service: "",
 				clientID: "",
@@ -228,7 +234,9 @@ const Home = () => {
 		} catch (err) {
 			notify(err.response.status, err.response.data.message);
 		} finally {
-			navigate(0);
+			setTImeout(() => {
+				navigate(0);
+			}, 1000);
 			setNewBill({
 				amount: "",
 				payment_method: "",
@@ -289,7 +297,9 @@ const Home = () => {
 		} catch (err) {
 			notify(err.response.status, err.response.data.message);
 		} finally {
-			navigate(0);
+			setTImeout(() => {
+				navigate(0);
+			}, 1000);
 			setNewFinance({
 				payroll: "",
 				billID: "",
@@ -313,7 +323,7 @@ const Home = () => {
 		<div className="relative flex flex-col gap-2 w-screen h-screen">
 			<Header />
 			<Modal show={showClientModal} handleShow={handleClientModal}>
-				<div className="flex flex-col gap-2 w-fit min-w-[300px]">
+				<div className="flex flex-col gap-2 w-[300px] max-[300px]:px-2 max-[300px]:w-full">
 					<div className="flex flex-col">
 						<span>
 							<label htmlFor="fullname">Fullname:</label>
@@ -359,7 +369,7 @@ const Home = () => {
 				</div>
 			</Modal>
 			<Modal show={showEmployeeModal} handleShow={handleEmployeeModal}>
-				<div className="flex flex-col gap-2 w-fit min-w-[300px]">
+				<div className="flex flex-col gap-2 w-[300px] max-[300px]:px-2 max-[300px]:w-full">
 					<div className="flex flex-col">
 						<span>
 							<label htmlFor="fullname">Fullname:</label>
@@ -422,7 +432,7 @@ const Home = () => {
 				</div>
 			</Modal>
 			<Modal show={showScheduleModal} handleShow={handleScheduleModal}>
-				<div className="flex flex-col gap-2 w-fit min-w-[300px]">
+				<div className="flex flex-col gap-2 w-[300px] max-[300px]:px-2 max-[300px]:w-full">
 					<div className="flex flex-col">
 						<span>
 							<label htmlFor="service">Service:</label>
@@ -440,25 +450,39 @@ const Home = () => {
 						<span>
 							<label htmlFor="clientID">Client ID:</label>
 						</span>
-						<input
+						<select
 							className="border border-black px-1 focus:outline-none"
 							name="clientID"
-							value={newSchedule.clientID}
+							id="clientID"
 							onChange={handleSchedule}
-							type="text"
-						/>
+						>
+							{clients.map((client, index) => {
+								return (
+									<option key={index} value={client.clientid}>
+										{client.clientid} | {client.fullname}
+									</option>
+								);
+							})}
+						</select>
 					</div>
 					<div className="flex flex-col">
 						<span>
 							<label htmlFor="employeeID">Employee ID:</label>
 						</span>
-						<input
+						<select
 							className="border border-black px-1 focus:outline-none"
 							name="employeeID"
-							value={newSchedule.employeeID}
+							id="employeeID"
 							onChange={handleSchedule}
-							type="text"
-						/>
+						>
+							{employees.map((employee, index) => {
+								return (
+									<option key={index} value={employee.employeeid}>
+										{employee.employeeid} | {employee.fullname}
+									</option>
+								);
+							})}
+						</select>
 					</div>
 					<button className="p-2 bg-gray-200 w-full" onClick={submitSchedule}>
 						<span>Add Schedule</span>
@@ -466,7 +490,7 @@ const Home = () => {
 				</div>
 			</Modal>
 			<Modal show={showBillModal} handleShow={handleBillModal}>
-				<div className="flex flex-col gap-2 w-fit min-w-[300px]">
+				<div className="flex flex-col gap-2 w-[300px] max-[300px]:px-2 max-[300px]:w-full">
 					<div className="flex flex-col">
 						<span>
 							<label htmlFor="amount">Amount:</label>
@@ -527,25 +551,39 @@ const Home = () => {
 						<span>
 							<label htmlFor="clientID">Client ID:</label>
 						</span>
-						<input
+						<select
 							className="border border-black px-1 focus:outline-none"
 							name="clientID"
-							value={newBill.clientID}
+							id="clientID"
 							onChange={handleBill}
-							type="text"
-						/>
+						>
+							{clients.map((client, index) => {
+								return (
+									<option key={index} value={newBill.clientID}>
+										{client.clientid} | {client.fullname}
+									</option>
+								);
+							})}
+						</select>
 					</div>
 					<div className="flex flex-col">
 						<span>
 							<label htmlFor="employeeID">Employee ID:</label>
 						</span>
-						<input
+						<select
 							className="border border-black px-1 focus:outline-none"
 							name="employeeID"
-							value={newBill.employeeID}
+							id="employeeID"
 							onChange={handleBill}
-							type="text"
-						/>
+						>
+							{employees.map((employee, index) => {
+								return (
+									<option key={index} value={newBill.employeeID}>
+										{employee.employeeid} | {employee.fullname}
+									</option>
+								);
+							})}
+						</select>
 					</div>
 					<button className="p-2 bg-gray-200 w-full" onClick={submitBill}>
 						<span>{newBill.billID === undefined ? "Add" : "Edit"} Bill</span>
@@ -553,7 +591,7 @@ const Home = () => {
 				</div>
 			</Modal>
 			<Modal show={showFinanceModal} handleShow={handleFinanceModal}>
-				<div className="flex flex-col gap-2 w-fit min-w-[300px]">
+				<div className="flex flex-col gap-2 w-[300px] max-[300px]:px-2 max-[300px]:w-full">
 					<div className="flex flex-col">
 						<span>
 							<label htmlFor="payroll">Payroll:</label>
@@ -571,25 +609,39 @@ const Home = () => {
 						<span>
 							<label htmlFor="billID">Bill ID:</label>
 						</span>
-						<input
+						<select
 							className="border border-black px-1 focus:outline-none"
 							name="billID"
-							value={newFinance.billID}
+							id="billID"
 							onChange={handleFinance}
-							type="text"
-						/>
+						>
+							{bills.map((bill, index) => {
+								return (
+									<option key={index} value={newFinance.billID}>
+										{bill.billid} | {bill.amount}
+									</option>
+								);
+							})}
+						</select>
 					</div>
 					<div className="flex flex-col">
 						<span>
 							<label htmlFor="employeeID">Employee ID:</label>
 						</span>
-						<input
+						<select
 							className="border border-black px-1 focus:outline-none"
 							name="employeeID"
-							value={newFinance.employeeID}
+							id="employeeID"
 							onChange={handleFinance}
-							type="text"
-						/>
+						>
+							{employees.map((employee, index) => {
+								return (
+									<option key={index} value={newFinance.employeeID}>
+										{employee.employeeid} | {employee.fullname}
+									</option>
+								);
+							})}
+						</select>
 					</div>
 					<button className="p-2 bg-gray-200 w-full" onClick={submitFinance}>
 						<span>
@@ -859,7 +911,7 @@ const Home = () => {
 										</button>
 									)}
 									{schedules.map((schedule, index) => (
-										<div key={index} className="flex flex-col gap-1">
+										<div key={index} className="relative flex flex-col gap-1">
 											<span>ID: {schedule.scheduleid}</span>
 											<span>Service: {schedule.service}</span>
 											<div className="flex flex-col gap-1">
