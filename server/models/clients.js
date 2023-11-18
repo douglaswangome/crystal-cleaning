@@ -8,7 +8,7 @@ const { pool } = require("../config/db");
 const addClient = async (res, client) => {
 	try {
 		const exisingClient = await pool.query(
-			"SELECT * FROM crystal.clients WHERE phone = $1",
+			"SELECT phone FROM crystal.clients WHERE phone = $1",
 			[client.phone]
 		);
 

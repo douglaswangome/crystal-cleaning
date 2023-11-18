@@ -2,6 +2,7 @@
 import { useState } from "react";
 // useDispatch is a hook that allows you to dispatch actions
 import { useDispatch } from "react-redux";
+// React Router is a library that allows you to handle routes in a React app
 // useNavigate is a hook that allows you to navigate to a different route
 import { useNavigate } from "react-router-dom";
 // api is an instance of axios that contains the base url of the backend

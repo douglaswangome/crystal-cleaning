@@ -16,11 +16,11 @@
 <li>Using axios I created a connection between my frontend and the restful api</li>
 <li>Serves notifications using react-hot-toast</li>
 <li>React router dom for navigation</li>
-<li>React reduc to handle the user state, which is also persisted into Local Storage</li>
+<li>React redux to handle the user state, which is also persisted into Local Storage</li>
 
 ## RESTful API Features
 
-<li>Express helped me create an application and its routes</li>
+<li>Express helped me create an application and its routes. This carry information instead of displaying a webpage</li>
 <li>Using helmet to increase the api security</li>
 <li>Seperated the functions from the routes to keep my code neat.</li>
 

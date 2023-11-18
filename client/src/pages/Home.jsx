@@ -24,11 +24,15 @@ const Home = () => {
 		JSON.parse(localStorage.getItem("user")) ||
 		"employee";
 	// bills - a state from the server that contains all the bills
+	const bills = useLoaderData().bills || [];
 	// clients - a state from the server that contains all the clients
+	const clients = useLoaderData().clients || [];
 	// employees - a state from the server that contains all the employees
+	const employees = useLoaderData().employees || [];
 	// finances - a state from the server that contains all the finances
+	const finances = useLoaderData().finances || [];
 	// schedules - a state from the server that contains all the schedules
-	const { bills, clients, employees, finances, schedules } = useLoaderData();
+	const schedules = useLoaderData().schedules || [];
 
 	const [currentTable, setCurrentTable] = useState(
 		roles === "manager"
@@ -320,7 +324,7 @@ const Home = () => {
 	};
 
 	return (
-		<div className="relative flex flex-col gap-2 w-screen h-screen">
+		<div className="relative flex flex-col w-screen h-screen gap-2">
 			<Header />
 			<Modal show={showClientModal} handleShow={handleClientModal}>
 				<div className="flex flex-col gap-2 w-[300px] max-[300px]:px-2 max-[300px]:w-full">
@@ -329,7 +333,7 @@ const Home = () => {
 							<label htmlFor="fullname">Fullname:</label>
 						</span>
 						<input
-							className="border border-black px-1 focus:outline-none"
+							className="px-1 border border-black focus:outline-none"
 							name="fullname"
 							value={newClient.fullname}
 							onChange={handleClient}
@@ -342,7 +346,7 @@ const Home = () => {
 							<label htmlFor="phone">Phone:</label>
 						</span>
 						<input
-							className="border border-black px-1 focus:outline-none"
+							className="px-1 border border-black focus:outline-none"
 							name="phone"
 							value={newClient.phone}
 							onChange={handleClient}
@@ -355,7 +359,7 @@ const Home = () => {
 							<label htmlFor="address">Address:</label>
 						</span>
 						<input
-							className="border border-black px-1 focus:outline-none"
+							className="px-1 border border-black focus:outline-none"
 							name="address"
 							value={newClient.address}
 							onChange={handleClient}
@@ -363,7 +367,7 @@ const Home = () => {
 							placeholder="XXXX-XXX-CODE"
 						/>
 					</div>
-					<button className="p-2 bg-gray-200 w-full" onClick={submitClient}>
+					<button className="w-full p-2 bg-gray-200" onClick={submitClient}>
 						<span>Add Client</span>
 					</button>
 				</div>
@@ -375,7 +379,7 @@ const Home = () => {
 							<label htmlFor="fullname">Fullname:</label>
 						</span>
 						<input
-							className="border border-black px-1 focus:outline-none"
+							className="px-1 border border-black focus:outline-none"
 							name="fullname"
 							value={newEmployee.fullname}
 							onChange={handleEmployee}
@@ -388,7 +392,7 @@ const Home = () => {
 							<label htmlFor="phone">Phone:</label>
 						</span>
 						<input
-							className="border border-black px-1 focus:outline-none"
+							className="px-1 border border-black focus:outline-none"
 							name="phone"
 							value={newEmployee.phone}
 							onChange={handleEmployee}
@@ -401,7 +405,7 @@ const Home = () => {
 							<label htmlFor="email">Email:</label>
 						</span>
 						<input
-							className="border border-black px-1 focus:outline-none"
+							className="px-1 border border-black focus:outline-none"
 							name="email"
 							value={newEmployee.email}
 							onChange={handleEmployee}
@@ -414,7 +418,7 @@ const Home = () => {
 							<label htmlFor="role">Role:</label>
 						</span>
 						<select
-							className="border border-black px-1 focus:outline-none"
+							className="px-1 border border-black focus:outline-none"
 							name="role"
 							onChange={handleEmployee}
 						>
@@ -424,7 +428,7 @@ const Home = () => {
 							<option value="employee">Employee</option>
 						</select>
 					</div>
-					<button className="p-2 bg-gray-200 w-full" onClick={submitEmployee}>
+					<button className="w-full p-2 bg-gray-200" onClick={submitEmployee}>
 						<span>
 							{newEmployee.employeeID === undefined ? "Add" : "Edit"} Employee
 						</span>
@@ -438,7 +442,7 @@ const Home = () => {
 							<label htmlFor="service">Service:</label>
 						</span>
 						<input
-							className="border border-black px-1 focus:outline-none"
+							className="px-1 border border-black focus:outline-none"
 							name="service"
 							value={newSchedule.service}
 							onChange={handleSchedule}
@@ -451,7 +455,7 @@ const Home = () => {
 							<label htmlFor="clientID">Client ID:</label>
 						</span>
 						<select
-							className="border border-black px-1 focus:outline-none"
+							className="px-1 border border-black focus:outline-none"
 							name="clientID"
 							id="clientID"
 							onChange={handleSchedule}
@@ -470,7 +474,7 @@ const Home = () => {
 							<label htmlFor="employeeID">Employee ID:</label>
 						</span>
 						<select
-							className="border border-black px-1 focus:outline-none"
+							className="px-1 border border-black focus:outline-none"
 							name="employeeID"
 							id="employeeID"
 							onChange={handleSchedule}
@@ -484,7 +488,7 @@ const Home = () => {
 							})}
 						</select>
 					</div>
-					<button className="p-2 bg-gray-200 w-full" onClick={submitSchedule}>
+					<button className="w-full p-2 bg-gray-200" onClick={submitSchedule}>
 						<span>Add Schedule</span>
 					</button>
 				</div>
@@ -496,7 +500,7 @@ const Home = () => {
 							<label htmlFor="amount">Amount:</label>
 						</span>
 						<input
-							className="border border-black px-1 focus:outline-none"
+							className="px-1 border border-black focus:outline-none"
 							name="amount"
 							value={newBill.amount}
 							onChange={handleBill}
@@ -509,7 +513,7 @@ const Home = () => {
 							<label htmlFor="payment_method">Payment Method:</label>
 						</span>
 						<input
-							className="border border-black px-1 focus:outline-none"
+							className="px-1 border border-black focus:outline-none"
 							name="payment_method"
 							value={newBill.payment_method}
 							onChange={handleBill}
@@ -523,7 +527,7 @@ const Home = () => {
 						</span>
 						<div className="flex gap-1">
 							<input
-								className="border border-black px-1 focus:outline-none"
+								className="px-1 border border-black focus:outline-none"
 								name="paid"
 								id="paid-yes"
 								checked={newBill.paid === true}
@@ -540,7 +544,7 @@ const Home = () => {
 							<label htmlFor="scheduleID">Schedule ID:</label>
 						</span>
 						<input
-							className="border border-black px-1 focus:outline-none"
+							className="px-1 border border-black focus:outline-none"
 							name="scheduleID"
 							value={newBill.scheduleID}
 							onChange={handleBill}
@@ -552,7 +556,7 @@ const Home = () => {
 							<label htmlFor="clientID">Client ID:</label>
 						</span>
 						<select
-							className="border border-black px-1 focus:outline-none"
+							className="px-1 border border-black focus:outline-none"
 							name="clientID"
 							id="clientID"
 							onChange={handleBill}
@@ -571,7 +575,7 @@ const Home = () => {
 							<label htmlFor="employeeID">Employee ID:</label>
 						</span>
 						<select
-							className="border border-black px-1 focus:outline-none"
+							className="px-1 border border-black focus:outline-none"
 							name="employeeID"
 							id="employeeID"
 							onChange={handleBill}
@@ -585,7 +589,7 @@ const Home = () => {
 							})}
 						</select>
 					</div>
-					<button className="p-2 bg-gray-200 w-full" onClick={submitBill}>
+					<button className="w-full p-2 bg-gray-200" onClick={submitBill}>
 						<span>{newBill.billID === undefined ? "Add" : "Edit"} Bill</span>
 					</button>
 				</div>
@@ -597,7 +601,7 @@ const Home = () => {
 							<label htmlFor="payroll">Payroll:</label>
 						</span>
 						<input
-							className="border border-black px-1 focus:outline-none"
+							className="px-1 border border-black focus:outline-none"
 							name="payroll"
 							value={newFinance.payroll}
 							type="text"
@@ -610,7 +614,7 @@ const Home = () => {
 							<label htmlFor="billID">Bill ID:</label>
 						</span>
 						<select
-							className="border border-black px-1 focus:outline-none"
+							className="px-1 border border-black focus:outline-none"
 							name="billID"
 							id="billID"
 							onChange={handleFinance}
@@ -629,7 +633,7 @@ const Home = () => {
 							<label htmlFor="employeeID">Employee ID:</label>
 						</span>
 						<select
-							className="border border-black px-1 focus:outline-none"
+							className="px-1 border border-black focus:outline-none"
 							name="employeeID"
 							id="employeeID"
 							onChange={handleFinance}
@@ -643,7 +647,7 @@ const Home = () => {
 							})}
 						</select>
 					</div>
-					<button className="p-2 bg-gray-200 w-full" onClick={submitFinance}>
+					<button className="w-full p-2 bg-gray-200" onClick={submitFinance}>
 						<span>
 							{newFinance.financeID === undefined ? "Add" : "Edit"} Finance
 						</span>
@@ -729,7 +733,7 @@ const Home = () => {
 						roles === "employee" && (
 							<>
 								<div
-									className="bg-gray-100 p-2 cursor-pointer"
+									className="p-2 bg-gray-100 cursor-pointer"
 									onClick={() => changeCurrentTable("schedules")}
 								>
 									<span>Schedules</span>
@@ -741,209 +745,241 @@ const Home = () => {
 				<div className="flex-1 w-full">
 					<div className="h-full">
 						{currentTable === "bills" ? (
-							<div className="flex flex-col p-2 divide-y gap-2 h-full overflow-y-scroll">
+							<div className="flex flex-col h-full gap-2 p-2 overflow-y-scroll divide-y">
 								<button
-									className="p-2 bg-gray-200 w-fit ml-auto"
+									className="p-2 ml-auto bg-gray-200 w-fit"
 									onClick={handleBillModal}
 								>
 									<span>
 										{newBill.billid === undefined ? "Add" : "Edit"} Bill
 									</span>
 								</button>
-								{bills.map((bill, index) => (
-									<div key={index} className="relative flex flex-col gap-1">
-										<span>ID: {bill.billid}</span>
-										<span>Amount: {bill.amount}</span>
-										<span>Payment Method: {bill.payment_method}</span>
-										<span className="flex items-center gap-1">
-											Paid: {bill.paid ? <BsCheckCircle /> : <BsXCircle />}
-										</span>
-										<div className="flex flex-col gap-1">
-											<span className="font-semibold">Schedule Details</span>
-											<div className="flex gap-2 items-center ml-2">
-												<span>ID: {bill.scheduleid}</span>
-												<span>Service: {bill.service}</span>
-											</div>
-										</div>
-										<div className="flex flex-col gap-1">
-											<span className="font-semibold">Client Details</span>
-											<div className="flex gap-2 items-center ml-2">
-												<span>ID: {bill.clientid}</span>
-												<span>Fullname: {bill.client_fullname}</span>
-												<span>Phone: {bill.phone}</span>
-												<span>Address: {bill.address}</span>
-											</div>
-										</div>
-										<div className="flex flex-col gap-1">
-											<span className="font-semibold">Employee Details</span>
-											<div className="flex gap-2 items-center ml-2">
-												<span>ID: {bill.employeeid}</span>
-												<span>Fullname: {bill.employee_fullname}</span>
-												<span>Email: {bill.email}</span>
-												<span>Phone: {bill.employee_phone}</span>
-											</div>
-										</div>
-										{roles === "auditor" && (
-											<div className="flex flex-col gap-1 absolute top-2 right-2 w-fit p-2">
-												<button
-													className="bg-green-400 text-white p-1"
-													onClick={() => editBill(bill)}
-												>
-													<span>Edit</span>
-												</button>
-											</div>
-										)}
-									</div>
-								))}
-							</div>
-						) : currentTable === "clients" ? (
-							<div className="flex flex-col p-2 divide-y gap-2 h-full overflow-y-scroll">
-								<button
-									className="p-2 bg-gray-200 w-fit ml-auto"
-									onClick={handleClientModal}
-								>
-									<span>Add Client</span>
-								</button>
-								{clients.map((client, index) => (
-									<div key={index} className="flex flex-col gap-1">
-										<span>ID: {client.clientid}</span>
-										<span>Fullname: {client.fullname}</span>
-										<span>Phone: {client.phone}</span>
-										<span>Address: {client.address}</span>
-									</div>
-								))}
-							</div>
-						) : currentTable === "employees" ? (
-							<div className="flex flex-col p-2 divide-y gap-2 h-full overflow-y-scroll">
-								{roles === "manager" && (
-									<button
-										className="p-2 bg-gray-200 w-fit ml-auto"
-										onClick={handleEmployeeModal}
-									>
-										<span>Add Employee</span>
-									</button>
-								)}
-								{employees.map((employee, index) => (
-									<div key={index} className="relative flex flex-col gap-1">
-										<span>ID: {employee.employeeid}</span>
-										<span>Fullname: {employee.fullname}</span>
-										<span>Phone: {employee.phone}</span>
-										<span>Email: {employee.email}</span>
-										<span className="capitalize">Role: {employee.roles}</span>
-										{roles === "manager" && (
-											<div className="flex flex-col gap-1 absolute top-2 right-2 w-fit p-2">
-												<button
-													className="bg-green-400 text-white p-1"
-													onClick={() => editEmployee(employee)}
-												>
-													<span>Edit</span>
-												</button>
-												<button
-													className=" bg-red-400 text-white p-1"
-													onClick={() => deleteEmployee(employee.employeeid)}
-												>
-													<span>Delete</span>
-												</button>
-											</div>
-										)}
-									</div>
-								))}
-							</div>
-						) : currentTable === "finances" ? (
-							<div className="flex flex-col p-2 divide-y gap-2">
-								{roles === "auditor" && (
-									<button
-										className="p-2 bg-gray-200 w-fit ml-auto"
-										onClick={handleFinanceModal}
-									>
-										<span>Add Finance</span>
-									</button>
-								)}
-								{finances.map((finance, index) => (
-									<div key={index} className="relative flex flex-col gap-1">
-										<span>ID: {finance.financeid}</span>
-										<span>Payroll: {finance.payroll}</span>
-										<div className="flex flex-col gap-1">
-											<span className="font-semibold">Bill Details</span>
-											<div className="flex gap-2 items-center ml-2">
-												<span>ID: {finance.billid}</span>
-												<span>Amount: {finance.amount}</span>
-												<span className="capitalize">
-													Payment Method: {finance.payment_method}
-												</span>
-												<span className="flex items-center gap-1">
-													Paid:
-													{finance.paid ? <BsCheckCircle /> : <BsXCircle />}
-												</span>
-											</div>
-										</div>
-										<div className="flex flex-col gap-1">
-											<span className="font-semibold">Employee Details</span>
-											<div className="flex gap-2 items-center ml-2">
-												<span>ID: {finance.employeeid}</span>
-												<span>Fullname: {finance.fullname}</span>
-												<span>Email: {finance.email}</span>
-												<span>Phone: {finance.phone}</span>
-											</div>
-										</div>
-										{roles === "auditor" && (
-											<div className="flex flex-col gap-1 absolute top-2 right-2 w-fit p-2">
-												<button
-													className="bg-green-400 text-white p-1"
-													onClick={() => editFinance(finance)}
-												>
-													<span>Edit</span>
-												</button>
-											</div>
-										)}
-									</div>
-								))}
-							</div>
-						) : (
-							currentTable === "schedules" && (
-								<div className="flex flex-col p-2 divide-y gap-2 h-full overflow-y-scroll">
-									{roles === "receptionist" && (
-										<button
-											className="p-2 bg-gray-200 w-fit ml-auto"
-											onClick={handleScheduleModal}
-										>
-											<span>Add Schedule</span>
-										</button>
-									)}
-									{schedules.map((schedule, index) => (
+								{bills.length > 0 ? (
+									bills.map((bill, index) => (
 										<div key={index} className="relative flex flex-col gap-1">
-											<span>ID: {schedule.scheduleid}</span>
-											<span>Service: {schedule.service}</span>
+											<span>ID: {bill.billid}</span>
+											<span>Amount: {bill.amount}</span>
+											<span>Payment Method: {bill.payment_method}</span>
+											<span className="flex items-center gap-1">
+												Paid: {bill.paid ? <BsCheckCircle /> : <BsXCircle />}
+											</span>
+											<div className="flex flex-col gap-1">
+												<span className="font-semibold">Schedule Details</span>
+												<div className="flex items-center gap-2 ml-2">
+													<span>ID: {bill.scheduleid}</span>
+													<span>Service: {bill.service}</span>
+												</div>
+											</div>
 											<div className="flex flex-col gap-1">
 												<span className="font-semibold">Client Details</span>
-												<div className="flex gap-2 items-center ml-2">
-													<span>ID: {schedule.clientid}</span>
-													<span>Fullname: {schedule.client_fullname}</span>
-													<span>Phone: {schedule.phone}</span>
-													<span>Address: {schedule.address}</span>
+												<div className="flex items-center gap-2 ml-2">
+													<span>ID: {bill.clientid}</span>
+													<span>Fullname: {bill.client_fullname}</span>
+													<span>Phone: {bill.phone}</span>
+													<span>Address: {bill.address}</span>
 												</div>
 											</div>
 											<div className="flex flex-col gap-1">
 												<span className="font-semibold">Employee Details</span>
-												<div className="flex gap-2 items-center ml-2">
-													<span>ID: {schedule.employeeid}</span>
-													<span>Fullname: {schedule.employee_fullname}</span>
-													<span>email: {schedule.email}</span>
-													<span>Phone: {schedule.employee_phone}</span>
+												<div className="flex items-center gap-2 ml-2">
+													<span>ID: {bill.employeeid}</span>
+													<span>Fullname: {bill.employee_fullname}</span>
+													<span>Email: {bill.email}</span>
+													<span>Phone: {bill.employee_phone}</span>
 												</div>
 											</div>
-											{roles === "receptionist" && (
-												<div className="flex flex-col gap-1 absolute top-2 right-2 w-fit p-2">
+											{roles === "auditor" && (
+												<div className="absolute flex flex-col gap-1 p-2 top-2 right-2 w-fit">
 													<button
-														className="bg-green-400 text-white p-1"
-														onClick={() => editSchedule(schedule)}
+														className="p-1 text-white bg-green-400"
+														onClick={() => editBill(bill)}
 													>
 														<span>Edit</span>
 													</button>
 												</div>
 											)}
 										</div>
-									))}
+									))
+								) : (
+									<div className="flex items-center justify-center h-full">
+										<span>No Bills</span>
+									</div>
+								)}
+							</div>
+						) : currentTable === "clients" ? (
+							<div className="flex flex-col h-full gap-2 p-2 overflow-y-scroll divide-y">
+								<button
+									className="p-2 ml-auto bg-gray-200 w-fit"
+									onClick={handleClientModal}
+								>
+									<span>Add Client</span>
+								</button>
+								{clients.length > 0 ? (
+									clients.map((client, index) => (
+										<div key={index} className="flex flex-col gap-1">
+											<span>ID: {client.clientid}</span>
+											<span>Fullname: {client.fullname}</span>
+											<span>Phone: {client.phone}</span>
+											<span>Address: {client.address}</span>
+										</div>
+									))
+								) : (
+									<div className="flex items-center justify-center h-full">
+										<span>No Clients</span>
+									</div>
+								)}
+							</div>
+						) : currentTable === "employees" ? (
+							<div className="flex flex-col h-full gap-2 p-2 overflow-y-scroll divide-y">
+								{roles === "manager" && (
+									<button
+										className="p-2 ml-auto bg-gray-200 w-fit"
+										onClick={handleEmployeeModal}
+									>
+										<span>Add Employee</span>
+									</button>
+								)}
+								{employees.length > 0 ? (
+									employees.map((employee, index) => (
+										<div key={index} className="relative flex flex-col gap-1">
+											<span>ID: {employee.employeeid}</span>
+											<span>Fullname: {employee.fullname}</span>
+											<span>Phone: {employee.phone}</span>
+											<span>Email: {employee.email}</span>
+											<span className="capitalize">Role: {employee.roles}</span>
+											{roles === "manager" && (
+												<div className="absolute flex flex-col gap-1 p-2 top-2 right-2 w-fit">
+													<button
+														className="p-1 text-white bg-green-400"
+														onClick={() => editEmployee(employee)}
+													>
+														<span>Edit</span>
+													</button>
+													<button
+														className="p-1 text-white bg-red-400 "
+														onClick={() => deleteEmployee(employee.employeeid)}
+													>
+														<span>Delete</span>
+													</button>
+												</div>
+											)}
+										</div>
+									))
+								) : (
+									<div className="flex items-center justify-center h-full">
+										<span>No Employees</span>
+									</div>
+								)}
+							</div>
+						) : currentTable === "finances" ? (
+							<div className="flex flex-col gap-2 p-2 divide-y">
+								{roles === "auditor" && (
+									<button
+										className="p-2 ml-auto bg-gray-200 w-fit"
+										onClick={handleFinanceModal}
+									>
+										<span>Add Finance</span>
+									</button>
+								)}
+								{finances.length > 0 ? (
+									finances.map((finance, index) => (
+										<div key={index} className="relative flex flex-col gap-1">
+											<span>ID: {finance.financeid}</span>
+											<span>Payroll: {finance.payroll}</span>
+											<div className="flex flex-col gap-1">
+												<span className="font-semibold">Bill Details</span>
+												<div className="flex items-center gap-2 ml-2">
+													<span>ID: {finance.billid}</span>
+													<span>Amount: {finance.amount}</span>
+													<span className="capitalize">
+														Payment Method: {finance.payment_method}
+													</span>
+													<span className="flex items-center gap-1">
+														Paid:
+														{finance.paid ? <BsCheckCircle /> : <BsXCircle />}
+													</span>
+												</div>
+											</div>
+											<div className="flex flex-col gap-1">
+												<span className="font-semibold">Employee Details</span>
+												<div className="flex items-center gap-2 ml-2">
+													<span>ID: {finance.employeeid}</span>
+													<span>Fullname: {finance.fullname}</span>
+													<span>Email: {finance.email}</span>
+													<span>Phone: {finance.phone}</span>
+												</div>
+											</div>
+											{roles === "auditor" && (
+												<div className="absolute flex flex-col gap-1 p-2 top-2 right-2 w-fit">
+													<button
+														className="p-1 text-white bg-green-400"
+														onClick={() => editFinance(finance)}
+													>
+														<span>Edit</span>
+													</button>
+												</div>
+											)}
+										</div>
+									))
+								) : (
+									<div className="flex items-center justify-center h-full">
+										<span>No Finances</span>
+									</div>
+								)}
+							</div>
+						) : (
+							currentTable === "schedules" && (
+								<div className="flex flex-col h-full gap-2 p-2 overflow-y-scroll divide-y">
+									{roles === "receptionist" && (
+										<button
+											className="p-2 ml-auto bg-gray-200 w-fit"
+											onClick={handleScheduleModal}
+										>
+											<span>Add Schedule</span>
+										</button>
+									)}
+									{schedules.length > 0 ? (
+										schedules.map((schedule, index) => (
+											<div key={index} className="relative flex flex-col gap-1">
+												<span>ID: {schedule.scheduleid}</span>
+												<span>Service: {schedule.service}</span>
+												<div className="flex flex-col gap-1">
+													<span className="font-semibold">Client Details</span>
+													<div className="flex items-center gap-2 ml-2">
+														<span>ID: {schedule.clientid}</span>
+														<span>Fullname: {schedule.client_fullname}</span>
+														<span>Phone: {schedule.phone}</span>
+														<span>Address: {schedule.address}</span>
+													</div>
+												</div>
+												<div className="flex flex-col gap-1">
+													<span className="font-semibold">
+														Employee Details
+													</span>
+													<div className="flex items-center gap-2 ml-2">
+														<span>ID: {schedule.employeeid}</span>
+														<span>Fullname: {schedule.employee_fullname}</span>
+														<span>email: {schedule.email}</span>
+														<span>Phone: {schedule.employee_phone}</span>
+													</div>
+												</div>
+												{roles === "receptionist" && (
+													<div className="absolute flex flex-col gap-1 p-2 top-2 right-2 w-fit">
+														<button
+															className="p-1 text-white bg-green-400"
+															onClick={() => editSchedule(schedule)}
+														>
+															<span>Edit</span>
+														</button>
+													</div>
+												)}
+											</div>
+										))
+									) : (
+										<div className="flex items-center justify-center h-full">
+											<span>No Schedules</span>
+										</div>
+									)}
 								</div>
 							)
 						)}
