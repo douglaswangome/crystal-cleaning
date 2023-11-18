@@ -1,5 +1,5 @@
-import React from "react";
-
+// A modal component that takes in a boolean prop to show or hide the modal
+// Usage:
 const Modal = (props) => {
 	const { children, show, handleShow } = props;
 	return (

@@ -1,3 +1,4 @@
+// Toast notification function
 import toast from "react-hot-toast";
 
 const notify = (status, message) => {

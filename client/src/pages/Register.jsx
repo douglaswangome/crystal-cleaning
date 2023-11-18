@@ -1,6 +1,10 @@
+// useState is a hook that allows us to have state variables in functional components
 import { useState } from "react";
+// useNavigate is a hook that allows you to navigate to a different route
 import { useNavigate } from "react-router-dom";
+// notify is a function that displays a toast notification
 import notify from "../fn/notify";
+// api is an instance of axios that contains the base url of the backend
 import { api } from "../routes/routes";
 
 const Register = () => {

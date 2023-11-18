@@ -1,8 +1,14 @@
+// useState is a hook that allows you to have state variables in functional components
 import { useState } from "react";
+// useDispatch is a hook that allows you to dispatch actions
 import { useDispatch } from "react-redux";
+// useNavigate is a hook that allows you to navigate to a different route
 import { useNavigate } from "react-router-dom";
+// api is an instance of axios that contains the base url of the backend
 import { api } from "../routes/routes";
+// login is an action from the redux store
 import { login } from "../store/slice";
+// notify is a function that displays a toast notification
 import notify from "../fn/notify";
 
 const Login = () => {

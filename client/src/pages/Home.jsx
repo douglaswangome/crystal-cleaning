@@ -1,17 +1,33 @@
+// useState is a hook that allows you to have state variables in functional components
 import { useState } from "react";
-import { useLoaderData } from "react-router-dom";
+// useLoaderData is a hook that allows you to access the data passed from the server
+// useNavigate is a hook that allows you to navigate between pages
+import { useLoaderData, useNavigate } from "react-router-dom";
+// api - a file that contains all the api calls
 import { api } from "../routes/routes";
+// Header - a component that contains the header of the application
 import Header from "../components/Header";
+// Modal - a component that contains the modal of the application
 import Modal from "../components/Modal";
+// BsCheckCircle, BsXCircle - icons from react-icons
 import { BsCheckCircle, BsXCircle } from "react-icons/bs";
+// useSelector - a hook that allows us to select a state from the redux store
 import { useSelector } from "react-redux";
+// notify - a function that displays a toast notification
 import notify from "../fn/notify";
 
 const Home = () => {
+	const navigate = useNavigate();
+	// user - a state from the redux store that contains the user information
 	const { roles } =
 		useSelector((state) => state.user.user) ||
 		JSON.parse(localStorage.getItem("user")) ||
 		"employee";
+	// bills - a state from the server that contains all the bills
+	// clients - a state from the server that contains all the clients
+	// employees - a state from the server that contains all the employees
+	// finances - a state from the server that contains all the finances
+	// schedules - a state from the server that contains all the schedules
 	const { bills, clients, employees, finances, schedules } = useLoaderData();
 
 	const [currentTable, setCurrentTable] = useState(
@@ -28,15 +44,19 @@ const Home = () => {
 	};
 
 	// Client
+	// showClientModal - a state that determines whether to show or hide the client modal
 	const [showClientModal, setShowClientModal] = useState(false);
+	// handleClientModal - a function that toggles the client modal
 	const handleClientModal = () => {
 		setShowClientModal(!showClientModal);
 	};
+	// newClient - a state that contains the new client information
 	const [newClient, setNewClient] = useState({
 		fullname: "",
 		phone: "",
 		address: "",
 	});
+	// handleClient - a function that updates the newClient state
 	const handleClient = (e) => {
 		setNewClient({ ...newClient, [e.target.name]: e.target.value });
 	};
@@ -47,6 +67,7 @@ const Home = () => {
 		} catch (err) {
 			notify(err.response.status, err.response.data.message);
 		} finally {
+			navigate(0);
 			setNewClient({
 				fullname: "",
 				phone: "",
@@ -57,19 +78,24 @@ const Home = () => {
 	};
 
 	// Employee
+	// showEmployeeModal - a state that determines whether to show or hide the employee modal
 	const [showEmployeeModal, setShowEmployeeModal] = useState(false);
+	// handleEmployeeModal - a function that toggles the employee modal
 	const handleEmployeeModal = () => {
 		setShowEmployeeModal(!showEmployeeModal);
 	};
+	// newEmployee - a state that contains the new employee information
 	const [newEmployee, setNewEmployee] = useState({
 		fullname: "",
 		phone: "",
 		email: "",
 		role: "employee",
 	});
+	// handleEmployee - a function that updates the newEmployee state
 	const handleEmployee = (e) => {
 		setNewEmployee({ ...newEmployee, [e.target.name]: e.target.value });
 	};
+	// submitEmployee - a function that submits the new employee information to the server
 	const submitEmployee = async () => {
 		try {
 			let response;
@@ -84,6 +110,7 @@ const Home = () => {
 		} catch (err) {
 			notify(err.response.status, err.response.data.message);
 		} finally {
+			navigate(0);
 			setNewEmployee({
 				fullname: "",
 				phone: "",
@@ -94,6 +121,7 @@ const Home = () => {
 			handleEmployeeModal();
 		}
 	};
+	// editEmployee - a function that updates the newEmployee state with the employee information
 	const editEmployee = (employee) => {
 		setNewEmployee({
 			employeeID: employee.employeeid,
@@ -104,6 +132,7 @@ const Home = () => {
 		});
 		handleEmployeeModal();
 	};
+	// deleteEmployee - a function that deletes the employee information from the server
 	const deleteEmployee = async (id) => {
 		try {
 			const response = await api.delete(`/employees/delete?employeeID=${id}`);
@@ -114,18 +143,23 @@ const Home = () => {
 	};
 
 	// Schedule
+	// showScheduleModal - a state that determines whether to show or hide the schedule modal
 	const [showScheduleModal, setShowScheduleModal] = useState(false);
+	// handleScheduleModal - a function that toggles the schedule modal
 	const handleScheduleModal = () => {
 		setShowScheduleModal(!showScheduleModal);
 	};
+	// newSchedule - a state that contains the new schedule information
 	const [newSchedule, setNewSchedule] = useState({
 		service: "",
 		clientID: "",
 		employeeID: "",
 	});
+	// handleSchedule - a function that updates the newSchedule state
 	const handleSchedule = (e) => {
 		setNewSchedule({ ...newSchedule, [e.target.name]: e.target.value });
 	};
+	// submitSchedule - a function that submits the new schedule information to the server
 	const submitSchedule = async () => {
 		try {
 			let response;
@@ -140,6 +174,7 @@ const Home = () => {
 		} catch (err) {
 			notify(err.response.status, err.response.data.message);
 		} finally {
+			navigate(0);
 			setNewSchedule({
 				service: "",
 				clientID: "",
@@ -148,6 +183,7 @@ const Home = () => {
 			handleScheduleModal();
 		}
 	};
+	// editSchedule - a function that updates the newSchedule state with the schedule information
 	const editSchedule = (schedule) => {
 		setNewSchedule({
 			scheduleID: schedule.scheduleid,
@@ -159,10 +195,13 @@ const Home = () => {
 	};
 
 	// Bill
+	// showBillModal - a state that determines whether to show or hide the bill modal
 	const [showBillModal, setShowBillModal] = useState(false);
+	// handleBillModal - a function that toggles the bill modal
 	const handleBillModal = () => {
 		setShowBillModal(!showBillModal);
 	};
+	// newBill - a state that contains the new bill information
 	const [newBill, setNewBill] = useState({
 		amount: "",
 		payment_method: "",
@@ -171,12 +210,13 @@ const Home = () => {
 		clientID: "",
 		employeeID: "",
 	});
+	// handleBill - a function that updates the newBill state
 	const handleBill = (e) => {
 		const { name, value, checked, type } = e.target;
 		setNewBill({ ...newBill, [name]: type === "checkbox" ? checked : value });
 	};
+	// submitBill - a function that submits the new bill information to the server
 	const submitBill = async () => {
-		2;
 		let response;
 		try {
 			if (newBill.billID === undefined) {
@@ -188,6 +228,7 @@ const Home = () => {
 		} catch (err) {
 			notify(err.response.status, err.response.data.message);
 		} finally {
+			navigate(0);
 			setNewBill({
 				amount: "",
 				payment_method: "",
@@ -199,6 +240,7 @@ const Home = () => {
 			handleBillModal();
 		}
 	};
+	// editBill - a function that updates the newBill state with the bill information
 	const editBill = (bill) => {
 		setNewBill({
 			billID: bill.billid,
@@ -213,18 +255,23 @@ const Home = () => {
 	};
 
 	// Finance
+	// showFinanceModal - a state that determines whether to show or hide the finance modal
 	const [showFinanceModal, setShowFinanceModal] = useState(false);
+	// handleFinanceModal - a function that toggles the finance modal
 	const handleFinanceModal = () => {
 		setShowFinanceModal(!showFinanceModal);
 	};
+	// newFinance - a state that contains the new finance information
 	const [newFinance, setNewFinance] = useState({
 		payroll: 0,
 		billID: "",
 		employeeID: "",
 	});
+	// handleFinance - a function that updates the newFinance state
 	const handleFinance = (e) => {
 		setNewFinance({ ...newFinance, [e.target.name]: e.target.value });
 	};
+	// submitFinance - a function that submits the new finance information to the server
 	const submitFinance = async () => {
 		try {
 			let response;
@@ -242,6 +289,7 @@ const Home = () => {
 		} catch (err) {
 			notify(err.response.status, err.response.data.message);
 		} finally {
+			navigate(0);
 			setNewFinance({
 				payroll: "",
 				billID: "",
@@ -250,6 +298,7 @@ const Home = () => {
 			handleFinanceModal();
 		}
 	};
+	// editFinance - a function that updates the newFinance state with the finance information
 	const editFinance = (finance) => {
 		setNewFinance({
 			financeID: finance.financeid,

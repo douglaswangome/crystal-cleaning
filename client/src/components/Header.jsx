@@ -1,6 +1,9 @@
+// React redux - a library that allows us to use redux with react
+// useSelector - a hook that allows us to select a state from the redux store
 import { useSelector } from "react-redux";
 
 const Header = () => {
+	// user - a state from the redux store that contains the user information
 	const user =
 		useSelector((state) => state.user.user) ||
 		JSON.parse(localStorage.getItem("user"));
