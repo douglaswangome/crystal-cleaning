@@ -1,7 +1,7 @@
 const { pool } = require("../config/db");
 
 // Employees
-// //  employeeID INT NOT NULL PRIMARY KEY,
+// // employeeID INT NOT NULL PRIMARY KEY,
 // // fullname VARCHAR(30) NOT NULL,
 // // phone VARCHAR(10) NOT NULL,
 // // email VARCHAR(30) NOT NULL,
@@ -10,7 +10,7 @@ const addEmployee = async (res, employee) => {
 	try {
 		// Await to see if employee exists
 		const existingEmployee = await pool.query(
-			"SELECT * FROM crystal.employees WHERE phone = $1",
+			"SELECT phone FROM crystal.employees WHERE phone = $1",
 			[employee.phone]
 		);
 
@@ -22,8 +22,8 @@ const addEmployee = async (res, employee) => {
 
 		// Add employee
 		await pool.query(
-			"INSERT INTO crystal.employees (fullname, phone, email) VALUES ($1, $2, $3) RETURNING *",
-			[employee.fullname, employee.phone, employee.email]
+			"INSERT INTO crystal.employees (fullname, phone, email, roles) VALUES ($1, $2, $3, $4) RETURNING *",
+			[employee.fullname, employee.phone, employee.email, employee.role]
 		);
 		res.status(200).json({ message: "Employee added successfully!" });
 	} catch (error) {
@@ -39,7 +39,7 @@ const fetchEmployees = async (res) => {
 	try {
 		// Get employees
 		const employees = await pool.query(
-			"SELECT employeeID, fullname, phone, email FROM crystal.employees"
+			"SELECT employeeID, fullname, phone, email, roles FROM crystal.employees"
 		);
 		res.status(200).json(employees.rows);
 	} catch (error) {
@@ -67,23 +67,11 @@ const editEmployee = async (res, employee) => {
 	}
 };
 
-const deleteEmployee = async (res, employee) => {
+const deleteEmployee = async (res, employeeID) => {
 	try {
-		// Await to see if employee exists
-		const existingEmployee = await pool.query(
-			"SELECT * FROM crystal.employees WHERE phone = $1",
-			[employee.phone]
-		);
-
-		// If employee exists, no need to add
-		if (existingEmployee.rowCount > 0) {
-			res.status(400).json({ message: "Employee already exists." });
-			throw new Error("Employee already exists.");
-		}
-
-		// Add employee
+		// delete employee
 		await pool.query("DELETE FROM crystal.employees WHERE employeeID = $1", [
-			employee.employeeID,
+			employeeID,
 		]);
 		res.status(200).json({ message: "Employee deleted successfully!" });
 	} catch (error) {

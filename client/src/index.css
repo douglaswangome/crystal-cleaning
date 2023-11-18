@@ -1,0 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Dosis&family=Nunito+Sans:opsz@6..12&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+	font-family: "Nunito Sans";
+}

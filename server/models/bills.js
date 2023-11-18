@@ -20,6 +20,43 @@ const addBill = async (res, bill) => {
 	}
 };
 
+const fetchBills = async (res) => {
+	try {
+		const bills = await pool.query(
+			`SELECT 
+				B.billID, 
+				B.amount, 
+				B.payment_method, 
+				B.paid, 
+				S.scheduleID,
+				S.service, 
+				C.clientID, 
+				C.fullname as client_fullname, 
+				C.phone, 
+				C.address, 
+				E.employeeID, 
+				E.fullname as employee_fullname, 
+				E.phone as employee_phone, 
+				E.email 
+			FROM 
+				crystal.bills AS B
+				LEFT JOIN
+				crystal.schedules AS S
+					ON B.scheduleID = S.scheduleID
+				LEFT JOIN 
+				crystal.clients AS C 
+					ON S.clientID = C.clientID 
+				LEFT JOIN 
+				crystal.employees AS E 
+					ON S.employeeID = E.employeeID`
+		);
+		res.status(200).json(bills.rows);
+	} catch (error) {
+		res.status(500).json({ message: "Error fetching bills, try again later." });
+		console.log(error);
+	}
+};
+
 const editBill = async (res, bill) => {
 	try {
 		const result = await pool.query(
@@ -37,4 +74,4 @@ const editBill = async (res, bill) => {
 	}
 };
 
-module.exports = { addBill, editBill };
+module.exports = { addBill, editBill, fetchBills };
