@@ -549,8 +549,8 @@ const Home = () => {
 					</button>
 				</div>
 			</Modal>
-			<div className="flex gap-2 w-full px-2 h-[calc(100vh-78px)]">
-				<div className="flex flex-col gap-1 w-1/5">
+			<div className="flex gap-2 w-full px-2 h-[calc(100vh-78px)] max-[680px]:flex-col">
+				<div className="flex flex-col gap-1 w-1/5 max-[680px]:w-full">
 					{roles === "manager" ? (
 						<>
 							<div

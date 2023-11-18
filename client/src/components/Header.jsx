@@ -13,11 +13,13 @@ const Header = () => {
 					src="/images/logo.png"
 					alt="logo"
 				/>
-				<span className="text-2xl font-bold">Crystal Cleaning</span>
+				<span className="text-2xl font-bold max-[680px]:text-lg max-[325px]:hidden">
+					Crystal Cleaning
+				</span>
 			</div>
 			<div className="flex gap-2 items-center">
-				<span className="capitalize">{user.roles}</span>
-				<div className="bg-[#0f93fe] rounded-full w-[40px] h-[40px] flex items-center justify-center text-white">
+				<span className="capitalize max-[490px]:hidden">{user.roles}</span>
+				<div className="bg-[#0f93fe] rounded-full w-[40px] h-[40px] flex items-center justify-center text-white max-[360px]:hidden">
 					{user.employeeid}
 				</div>
 				<div className="flex flex-col">
